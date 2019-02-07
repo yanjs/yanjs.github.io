@@ -3,13 +3,17 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>Yanjs</title>
+  <title>Hello | Yanjs</title>
   <meta name="author" content="Stibium">
+  
+  <meta name="description" content="不请自邀随着信息社会的发展，又由于个人需求，我也用Github Pages和Hexo搞了个静态的网站，记录我的学习生活。没有评论功能，可在页面底部找到我的邮箱。
+注意：本博客页面发布时间均可更改，请勿轻信。不过本页面发布时间是真的。
+12345//C++#include &amp;lt;cstdio&amp;gt;">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Hello">
   <meta property="og:site_name" content="Yanjs">
 
   
@@ -40,8 +44,7 @@
 <div class="clearfix"></div>
 </header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
   <div class="post-content">
     <header>
@@ -51,7 +54,7 @@
       
       
   
-    <h1 class="title"><a href="/2019/02/Hello">Hello</a></h1>
+    <h1 class="title">Hello</h1>
   
 
     </header>
@@ -68,19 +71,23 @@
     <footer>
       
         
+  
+  <div class="categories">
+    <a href="/categories/this/">this</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+
       
       <div class="clearfix"></div>
     </footer>
   </div>
 </article>
-
-
-
-<nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav></div></div>
+</div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
