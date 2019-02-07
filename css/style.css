@@ -734,6 +734,7 @@ figure.highlight .gutter {
   padding-right: 15px;
   border-right: 1px solid #ddd;
   text-align: right;
+  width: 30px;
 }
 figure.highlight .code {
   padding-left: 15px;
