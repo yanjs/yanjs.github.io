@@ -3,13 +3,15 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>Yanjs</title>
+  <title>CRC-32 | Yanjs</title>
   <meta name="author" content="Stibium">
+  
+  <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849/* Table of CRCs of all 8-bit messages. */unsigned long crc_t">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="CRC-32">
   <meta property="og:site_name" content="Yanjs">
 
   
@@ -40,8 +42,7 @@
 <div class="clearfix"></div>
 </header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
   <div class="post-content">
     <header>
@@ -51,7 +52,7 @@
       
       
   
-    <h1 class="title"><a href="/2019/02/CRC-32.html">CRC-32</a></h1>
+    <h1 class="title">CRC-32</h1>
   
 
     </header>
@@ -64,125 +65,28 @@
     <footer>
       
         
-      
-      <div class="clearfix"></div>
-    </footer>
+  
+  <div class="categories">
+    <a href="/categories/Programming/">Programming</a>
   </div>
-</article>
 
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-02-23T15:04:44.000Z"><a href="/2019/02/png.html">Sat Feb 23 2019 23:04:44 GMT+0800</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/02/png.html">png</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="png-Portable-Network-Graphics-�l��u"><a href="#png-Portable-Network-Graphics-�l��u" class="headerlink" title="png (Portable Network Graphics) �ļ��ṹ"></a>png (Portable Network Graphics) �ļ��ṹ</h1><p>Source: <a href="https://www.w3.org/TR/PNG-Structure.html" target="_blank" rel="noopener">https://www.w3.org/TR/PNG-Structure.html</a></p>
-<h2 id="Sample-PNG"><a href="#Sample-PNG" class="headerlink" title="Sample PNG"></a>Sample PNG</h2><p>![png][sample]</p>
-<h2 id="File-signature"><a href="#File-signature" class="headerlink" title="File signature"></a>File signature</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">off  00 01 02 03 04 05 06 07</span><br><span class="line">hex  89 50 4E 47 0D 0A 1A 0A</span><br><span class="line">asc      P  N  G \r \n    \n</span><br></pre></td></tr></table></figure>
-<h2 id="Chunk"><a href="#Chunk" class="headerlink" title="Chunk"></a>Chunk</h2><h3 id="Parts"><a href="#Parts" class="headerlink" title="Parts:"></a>Parts:</h3><p><strong>Length</strong></p>
-<p>&emsp; A 4-byte unsigned integer giving the number of bytes in the chunk’s <strong>Data</strong> field</p>
-<p><strong>Chunk Type</strong></p>
-<p>A 4-byte chunk type code.</p>
-<p><strong>Chunk Data</strong></p>
-<p>The data bytes appropriate to the chunk type, if any. This field can be of zero length.</p>
-<p><strong>CRC</strong></p>
-<p>A 4-byte CRC (Cyclic Redundancy Check) calculated on the preceding bytes in the chunk, including the <strong>Chunk Type</strong> code and <strong>Chunk Data</strong> fields, but NOT including the <strong>Length</strong> field. The CRC is always present, even for chunks containing no data.  </p>
-<p>-[sample]:  <a href="https://upload.wikimedia.org/wikipedia/commons/6/6b/Trimethylsilanol_%28structure%29.png" target="_blank" rel="noopener">https://upload.wikimedia.org/wikipedia/commons/6/6b/Trimethylsilanol_%28structure%29.png</a></p>
-
-      
-    </div>
-    <footer>
-      
         
-      
-      <div class="clearfix"></div>
-    </footer>
+  
+  <div class="tags">
+    <a href="/tags/Algorithm/">Algorithm</a>
   </div>
-</article>
 
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-02-08T08:04:24.000Z"><a href="/2019/02/Programming-Pearls.html">Fri Feb 08 2019 16:04:24 GMT+0800</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/02/Programming-Pearls.html">Programming Pearls</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>经过几个月的探索，我觉得跟着一本书学习会比较好。我曾经选择了<a href="https://en.wikipedia.org/wiki/Introduction_to_Algorithms" target="_blank" rel="noopener"><em>Introduction to Algorithms</em></a>(《<del>脱发</del>算法导论》)，但是我太菜了，看不懂。</p>
-<p>现在看的是<em>Programming Pearls</em>(《编程珠玑》) 作者： <a href="https://en.wikipedia.org/wiki/Jon_Bentley_%28computer_scientist%29" target="_blank" rel="noopener">Jon Bently</a></p>
-
-      
-    </div>
-    <footer>
-      
         
+  <div class="addthis addthis_toolbox addthis_default_style">
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+
       
       <div class="clearfix"></div>
     </footer>
   </div>
 </article>
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-02-07T06:32:10.000Z"><a href="/2019/02/Hello.html">Thu Feb 07 2019 14:32:10 GMT+0800</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/02/Hello.html">Hello</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><del>不请自邀</del><br>随着信息社会的发展，又由于个人需求，我也用<a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a>和<a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>搞了个静态的网站，记录我的学习生活。<br>没有评论功能，可在页面底部找到我的邮箱。</p>
-<p>注意：本博客页面发布时间均可更改，请勿轻信。不过本页面发布时间是真的。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//C++</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Hello world\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//js</span></span><br><span class="line">alert(<span class="string">"Hello World"</span>);</span><br></pre></td></tr></table></figure>
-<p>Stibium<br>2019-02-07 于北市家中</p>
-
-      
-    </div>
-    <footer>
-      
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-<nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav></div></div>
+</div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">

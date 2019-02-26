@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>KMP Algorithm | Yanjs</title>
+  <meta name="author" content="Stibium">
+  
+  <meta name="description" content="KMP算法(Knuth–Morris–Pratt algorithm)是一个查找算法。参考《算法导论》P570，代码如下：
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="KMP Algorithm">
+  <meta property="og:site_name" content="Yanjs">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Yanjs" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Yanjs</a></h1>
+  <h2><a href="/">test page</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-02-07T09:41:52.000Z"><a href="/2019/02/KMP-Algorithm">Thu Feb 07 2019 17:41:52 GMT+0800</a></time>
+      
+      
+  
+    <h1 class="title">KMP Algorithm</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>KMP算法(<a href="https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm" target="_blank" rel="noopener">Knuth–Morris–Pratt algorithm</a>)<br>是一个查找算法。<br>参考《算法导论》P570，代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//C++</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TEXT <span class="meta-string">"abcabcaabcabbcabcabcbabcbcbabcabbabcababcbabcbabcabbcabcabcabcababcbacbacbabcbabcbacbabcbabcbacbabcbcbacbabcbacbabcabcbbbabcbacabcabcababcabcbacbabcbabcbabcbabcabcbab"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PATTERN <span class="meta-string">"abcabcab"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KMPString</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">char</span> *sCh;</span><br><span class="line">	<span class="keyword">int</span> sLen;</span><br><span class="line">	KMPString(<span class="keyword">char</span> *str): sCh(str),sLen(<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="keyword">while</span> (str[sLen++]) &#123;&#125;</span><br><span class="line">		sLen--;<span class="comment">//字符串长度，不包括结尾的\0</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KMPPattern</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> *pCh;</span><br><span class="line">	<span class="keyword">int</span> *next;</span><br><span class="line">	<span class="keyword">int</span> pLen;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	KMPPattern(<span class="keyword">char</span> *pointer) : pCh(pointer) &#123;</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (pCh[i++]) &#123;&#125;</span><br><span class="line">		pLen = i - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (!pLen) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Failed\n"</span>);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		next = <span class="keyword">new</span> <span class="keyword">int</span>[pLen];</span><br><span class="line">	&#125;</span><br><span class="line">	~KMPPattern() &#123;</span><br><span class="line">		<span class="keyword">delete</span>[] next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">compile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> i, j = <span class="number">0</span>;</span><br><span class="line">		next[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; pLen; i++) &#123;</span><br><span class="line">			<span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; pCh[j] != pCh[i]) &#123;<span class="comment">//不能再配</span></span><br><span class="line">				j = next[j<span class="number">-1</span>];<span class="comment">//赶回老家</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (pCh[j] == pCh[i]) &#123;<span class="comment">//您配</span></span><br><span class="line">				j++;<span class="comment">//再配一把</span></span><br><span class="line">			&#125;</span><br><span class="line">			next[i] = j;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> i;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pLen; i++) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d "</span>, next[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">match</span><span class="params">(KMPString *kmps)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> sLen = kmps-&gt;sLen;</span><br><span class="line">		<span class="keyword">char</span> *sCh = kmps-&gt;sCh;</span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">int</span> sOffset = <span class="number">0</span>, pOffset = <span class="number">0</span>;<span class="comment">//保存配的记录</span></span><br><span class="line">		<span class="keyword">for</span> (; sOffset &lt; sLen; sOffset++) &#123;<span class="comment">//您配吗</span></span><br><span class="line">			<span class="keyword">while</span> (pOffset &gt; <span class="number">0</span> &amp;&amp; pCh[pOffset] != sCh[sOffset]) &#123;<span class="comment">//您曾配过，又不配了</span></span><br><span class="line">				pOffset = next[pOffset<span class="number">-1</span>];<span class="comment">//赶回老家</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (pCh[pOffset] == sCh[sOffset]) &#123;<span class="comment">//您配</span></span><br><span class="line">				pOffset++;<span class="comment">//再配一把</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (pOffset == pLen) &#123;<span class="comment">//您配完了</span></span><br><span class="line">				pOffset = next[pOffset<span class="number">-1</span>];<span class="comment">//下次再来</span></span><br><span class="line">				sOffset++;<span class="comment">//重新开始</span></span><br><span class="line">				<span class="keyword">return</span> sOffset - pLen;<span class="comment">//配开始的位置</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//没得配了</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> result;</span><br><span class="line">	<span class="keyword">char</span> s1[] = TEXT;</span><br><span class="line">	<span class="keyword">char</span> s2[] = PATTERN;</span><br><span class="line">	<span class="function">KMPString <span class="title">kmps</span><span class="params">(s1)</span></span>;</span><br><span class="line">	<span class="function">KMPPattern <span class="title">kmpp</span><span class="params">(s2)</span></span>;</span><br><span class="line">	kmpp.compile();</span><br><span class="line">	<span class="keyword">while</span> ((result = kmpp.match(&amp;kmps)) != <span class="number">-1</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, result + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	kmpp.print();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/algorithm/">algorithm</a>, <a href="/tags/C/">C++</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" autocomplete="off" results="0" placeholder="Google站内搜索">
+    <input type="hidden" name="q" value="site:yanjs.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/this/">this</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>1</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">&copy; 2019 Stibium <a href="&#x6D;&#x61;&#x69;l&#x74;&#x6F;:&#x66;e&#x6C;&#x69;&#x78;&#x79;&#x6A;s&#x40;&#x67;&#x6D;&#x61;&#x69;&#x6C;.&#x63;&#x6F;&#x6D;">Con&#x74;ac&#x74; &#x6D;e &#x76;ia &#x65;&#x6D;ai&#x6C;</a>
+</div>
+<div class="alignleft">
+  / Powered by <a href="//hexo.io">Hexo</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
