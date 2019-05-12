@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>PNG Structure | Yanjs</title>
+  <meta name="author" content="Stibium">
+  
+  <meta name="description" content="PNG (Portable Network Graphics) StructureSource: https://www.w3.org/TR/PNG-Structure.html
+File signature8 bytes:
+
+HEX:  89 50 4E 47 0D 0A 1A 0A 
+ASC: ">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="PNG Structure">
+  <meta property="og:site_name" content="Yanjs">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Yanjs" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Yanjs</a></h1>
+  <h2><a href="/">test page</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-02-23T15:04:44.000Z"><a href="/2019/02/PNG-Structure.html">Sat Feb 23 2019 23:04:44 GMT+0800</a></time>
+      
+      
+  
+    <h1 class="title">PNG Structure</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="PNG-Portable-Network-Graphics-Structure"><a href="#PNG-Portable-Network-Graphics-Structure" class="headerlink" title="PNG (Portable Network Graphics) Structure"></a>PNG (Portable Network Graphics) Structure</h1><p>Source: <a href="https://www.w3.org/TR/PNG-Structure.html" target="_blank" rel="noopener">https://www.w3.org/TR/PNG-Structure.html</a></p>
+<h2 id="File-signature"><a href="#File-signature" class="headerlink" title="File signature"></a>File signature</h2><p>8 bytes:</p>
+<pre>
+HEX:  89 50 4E 47 0D 0A 1A 0A 
+ASC:  NA  P  N  G \r \n NA \n 
+</pre>
+
+<h2 id="Parts"><a href="#Parts" class="headerlink" title="Parts"></a>Parts</h2><p>Each chunk consists of three or four fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Length</strong></td>
+<td>A 4-byte unsigned integer <tt>∈[0,2^31-1]</tt> giving the number of bytes in the <strong>Chunk Data</strong> field. Although encoders and decoders should treat the length as unsigned, its value shall not exceed <tt>(2^31-1)</tt> bytes.</td>
+</tr>
+<tr>
+<td><strong>Chunk Type</strong></td>
+<td>A 4-byte chunk type code. Each byte <tt>∈[‘A’,’Z’]∪[‘a’,’z’]</tt>.</td>
+</tr>
+<tr>
+<td><strong>Chunk Data</strong></td>
+<td>The data bytes appropriate to the <strong>Chunk Type</strong>, if any. This field can be of zero length.</td>
+</tr>
+<tr>
+<td><strong>CRC</strong></td>
+<td>A 4-byte CRC (Cyclic Redundancy Check) calculated on the preceding bytes in the chunk, including the <strong>Chunk Type</strong> code and <strong>Chunk Data</strong> fields, but NOT including the <strong>Length</strong> field. The CRC is always present, even for chunks containing no data. See <a href="https://www.w3.org/TR/PNG/#5CRC-algorithm" target="_blank" rel="noopener">CRC algorithm</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>The chunk data length can be any number of bytes up to the maximum; therefore, implementors cannot assume that chunks are aligned on any boundaries larger than bytes.</p>
+<p>See Rationale: <a href="https://www.w3.org/TR/PNG-Rationale.html#R.Chunk-layout" target="_blank" rel="noopener">Chunk layout</a></p>
+<h2 id="Chunk-Naming-Conventions"><a href="#Chunk-Naming-Conventions" class="headerlink" title="Chunk Naming Conventions"></a>Chunk Naming Conventions</h2><p>Chunk types are chosen to be meaningful names when the bytes of the chunk type are interpreted as ISO 646 letters. Chunk types are assigned so that a decoder can determine some properties of a chunk even when the type is not recognized.</p>
+<p>Four bits of the chunk type, the property bits, namely bit 5 (value 32) of each byte, are used to convey chunk properties. This choice means that a human can read off the assigned properties according to whether the letter corresponding to each byte of the chunk type is uppercase (bit 5 is 0) or lowercase (bit 5 is 1).</p>
+<p>The property bits are an inherent part of the chunk type, and hence are fixed for any chunk type. Thus, CHNK and cHNk would be unrelated chunk types, not the same chunk with different properties.</p>
+<table>
+<thead>
+<tr>
+<th>Byte</th>
+<th>Bit</th>
+<th>Name</th>
+<th>Value</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>5</td>
+<td>Ancillary bit</td>
+<td>0 (UPPERCASE) = CRITICAL, 1 (lowercase) = ancillary.</td>
+<td>Critical chunks are necessary for successful display of the contents of the datastream. A decoder trying to extract the image, upon encountering an unknown chunk type in which the ancillary bit is 0, shall indicate to the user that the image contains information it cannot safely interpret. Ancillary chunks are not strictly necessary in order to meaningfully display the contents of the datastream. A decoder encountering an unknown chunk type in which the ancillary bit is 1 can safely ignore the chunk and proceed to display the image.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>Private bit</td>
+<td>0 = PUBLIC, 1 = private.</td>
+<td>A public chunk is one that is defined in this International Standard or is registered in the list of PNG special-purpose public chunk types maintained by the Registration Authority. Applications can also define private (unregistered) chunk types for their own purposes. Decoders do not need to test the private-chunk property bit, since it has no functional significance; it is simply an administrative convenience to ensure that public and private chunk names will not conflict.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>Reserved bit</td>
+<td>0 = IN THIS VERSION OF PNG, 1 = ??.</td>
+<td>The case of the third letter of the chunk name is reserved for possible future extension. In this International Standard, all chunk names shall have uppercase third letters.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+<td>Save-to-copy bit</td>
+<td>0 = UNSAFE, 1 = safe.</td>
+<td>This property bit is not of interest to pure decoders, but it is needed by PNG editors. This bit defines the proper handling of unrecognized chunks in a datastream that is being modified.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre>
+cHNk  //32 bit chunk type represented in text form
+||||
+|||^- Safe-to-copy bit is 1 (lowercase; bit 5 is 1)
+||^-- Reserved bit is 0     (uppercase; bit 5 is 0)
+|^--- Private bit is 0      (uppercase; bit 5 is 0)
+^---- Ancillary bit is 1    (lowercase; bit 5 is 1)
+</pre>
+
+<h2 id="Trunk-Order"><a href="#Trunk-Order" class="headerlink" title="Trunk Order"></a>Trunk Order</h2><table>
+<thead>
+<tr>
+<th>Chunk name</th>
+<th>Multiple allowed</th>
+<th>Ordering constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IHDR</td>
+<td>No</td>
+<td>Shall be first</td>
+</tr>
+<tr>
+<td>PLTE</td>
+<td>No</td>
+<td>Before first IDAT</td>
+</tr>
+<tr>
+<td>IDAT</td>
+<td>Yes</td>
+<td>Multiple IDAT chunks shall be consecutive</td>
+</tr>
+<tr>
+<td>IEND</td>
+<td>No</td>
+<td>Shall be last</td>
+</tr>
+<tr>
+<td>cHRM</td>
+<td>No</td>
+<td>Before PLTE and IDAT</td>
+</tr>
+<tr>
+<td>gAMA</td>
+<td>No</td>
+<td>Before PLTE and IDAT</td>
+</tr>
+<tr>
+<td>iCCP</td>
+<td>No</td>
+<td>Before PLTE and IDAT. If the iCCP chunk is present, the sRGB chunk should not be present.</td>
+</tr>
+<tr>
+<td>sBIT</td>
+<td>No</td>
+<td>Before PLTE and IDAT</td>
+</tr>
+<tr>
+<td>sRGB</td>
+<td>No</td>
+<td>Before PLTE and IDAT. If the sRGB chunk is present, the iCCP chunk should not be present.</td>
+</tr>
+<tr>
+<td>bKGD</td>
+<td>No</td>
+<td>After PLTE; before IDAT</td>
+</tr>
+<tr>
+<td>hIST</td>
+<td>No</td>
+<td>After PLTE; before IDAT</td>
+</tr>
+<tr>
+<td>tRNS</td>
+<td>No</td>
+<td>After PLTE; before IDAT</td>
+</tr>
+<tr>
+<td>pHYs</td>
+<td>No</td>
+<td>Before IDAT</td>
+</tr>
+<tr>
+<td>sPLT</td>
+<td>Yes</td>
+<td>Before IDAT</td>
+</tr>
+<tr>
+<td>tIME</td>
+<td>No</td>
+<td>None</td>
+</tr>
+<tr>
+<td>iTXt</td>
+<td>Yes</td>
+<td>None</td>
+</tr>
+<tr>
+<td>tEXt</td>
+<td>Yes</td>
+<td>None</td>
+</tr>
+<tr>
+<td>zTXt</td>
+<td>Yes</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>PNG images with PLTE in datastream:</p>
+<iframe src="/img/png1.svg" height="540" width="800"><br></iframe>
+
+<p>PNG images without PLTE in datastream:</p>
+<iframe src="/img/png2.svg" height="540" width="900"><br></iframe>
+
+<h2 id="Chunks"><a href="#Chunks" class="headerlink" title="Chunks"></a>Chunks</h2><p>See <a href="https://www.w3.org/TR/PNG/#table53" target="_blank" rel="noopener">Portable Network Graphics (PNG) Specification (Second Edition)</a></p>
+<p>…</p>
+<h2 id="Sample-PNG"><a href="#Sample-PNG" class="headerlink" title="Sample PNG"></a>Sample PNG</h2><p><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Trimethylsilanol_%28structure%29.png" alt="png"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Programming/">Programming</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/File-structure/">File_structure</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" autocomplete="off" results="0" placeholder="Google站内搜索">
+    <input type="hidden" name="q" value="site:yanjs.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Programming/">Programming</a><small>4</small></li>
+  
+    <li><a href="/categories/This/">This</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Algorithm/">Algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/Book/">Book</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C++</a><small>0</small></li>
+  
+    <li><a href="/tags/File-structure/">File_structure</a><small>1</small></li>
+  
+    <li><a href="/tags/Python/">Python</a><small>1</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>0</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">&copy; 2019 Stibium <a href="&#x6D;&#x61;&#x69;l&#x74;&#x6F;:&#x66;e&#x6C;&#x69;&#x78;&#x79;&#x6A;s&#x40;&#x67;&#x6D;&#x61;&#x69;&#x6C;.&#x63;&#x6F;&#x6D;">Con&#x74;ac&#x74; &#x6D;e &#x76;ia &#x65;&#x6D;ai&#x6C;</a>
+</div>
+<div class="alignleft">
+  / Powered by <a href="//hexo.io">Hexo</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

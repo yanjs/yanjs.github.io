@@ -3,17 +3,21 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>png | Yanjs</title>
+  <title>Python.restart() | Yanjs</title>
   <meta name="author" content="Stibium">
   
-  <meta name="description" content="png (Portable Network Graphics) �ļ��ṹSource: https://www.w3.org/TR/PNG-Structure.html
-Sample PNG![png][sample]
-File signature123off  00 01 02 03 04 05">
+  <meta name="description" content="今天开始重新从头开始学习Python3。链接：Python官方教程(En)
+此处为阅读笔记。
+IndexPython是解释型语言，扩展性强，很🐮🍺。
+1. Whetting Your Appetite 激发你的学习欲望大意：
+(C家=C/C++)
+若你想要自动化，Python很合适。
+C家/Ja">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="png">
+  <meta property="og:title" content="Python.restart()">
   <meta property="og:site_name" content="Yanjs">
 
   
@@ -50,28 +54,37 @@ File signature123off  00 01 02 03 04 05">
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-02-23T15:04:44.000Z"><a href="/2019/02/png.html">Sat Feb 23 2019 23:04:44 GMT+0800</a></time>
+        <time datetime="2019-05-12T14:39:37.000Z"><a href="/2019/05/Python-restart.html">Sun May 12 2019 22:39:37 GMT+0800</a></time>
       
       
   
-    <h1 class="title">png</h1>
+    <h1 class="title">Python.restart()</h1>
   
 
     </header>
     <div class="entry">
       
-        <h1 id="png-Portable-Network-Graphics-�l��u"><a href="#png-Portable-Network-Graphics-�l��u" class="headerlink" title="png (Portable Network Graphics) �ļ��ṹ"></a>png (Portable Network Graphics) �ļ��ṹ</h1><p>Source: <a href="https://www.w3.org/TR/PNG-Structure.html" target="_blank" rel="noopener">https://www.w3.org/TR/PNG-Structure.html</a></p>
-<h2 id="Sample-PNG"><a href="#Sample-PNG" class="headerlink" title="Sample PNG"></a>Sample PNG</h2><p>![png][sample]</p>
-<h2 id="File-signature"><a href="#File-signature" class="headerlink" title="File signature"></a>File signature</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">off  00 01 02 03 04 05 06 07</span><br><span class="line">hex  89 50 4E 47 0D 0A 1A 0A</span><br><span class="line">asc      P  N  G \r \n    \n</span><br></pre></td></tr></table></figure>
-<h2 id="Chunk"><a href="#Chunk" class="headerlink" title="Chunk"></a>Chunk</h2><h3 id="Parts"><a href="#Parts" class="headerlink" title="Parts:"></a>Parts:</h3><p><strong>Length</strong></p>
-<p>&emsp; A 4-byte unsigned integer giving the number of bytes in the chunk’s <strong>Data</strong> field</p>
-<p><strong>Chunk Type</strong></p>
-<p>A 4-byte chunk type code.</p>
-<p><strong>Chunk Data</strong></p>
-<p>The data bytes appropriate to the chunk type, if any. This field can be of zero length.</p>
-<p><strong>CRC</strong></p>
-<p>A 4-byte CRC (Cyclic Redundancy Check) calculated on the preceding bytes in the chunk, including the <strong>Chunk Type</strong> code and <strong>Chunk Data</strong> fields, but NOT including the <strong>Length</strong> field. The CRC is always present, even for chunks containing no data.  </p>
-<p>-[sample]:  <a href="https://upload.wikimedia.org/wikipedia/commons/6/6b/Trimethylsilanol_%28structure%29.png" target="_blank" rel="noopener">https://upload.wikimedia.org/wikipedia/commons/6/6b/Trimethylsilanol_%28structure%29.png</a></p>
+        <p>今天开始重新从头开始学习Python3。<br>链接：<a href="https://docs.python.org/3/tutorial/index.html" target="_blank" rel="noopener">Python官方教程(En)</a></p>
+<p>此处为阅读笔记。</p>
+<h1 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h1><p>Python是解释型语言，扩展性强，很🐮🍺。</p>
+<h1 id="1-Whetting-Your-Appetite-激发你的学习欲望"><a href="#1-Whetting-Your-Appetite-激发你的学习欲望" class="headerlink" title="1. Whetting Your Appetite 激发你的学习欲望"></a>1. Whetting Your Appetite 激发你的学习欲望</h1><p>大意：</p>
+<p>(C家=C/C++)</p>
+<p>若你想要自动化，Python很合适。</p>
+<p>C家/Java易脱发。测试数据难生成。我的程序需拓展语言。Shell/Bat做GUI难。C家/Java草稿烦。</p>
+<p>Python易用多平台，是真正的编程语言。比Shell/Bat强大。错误处理完爆C。数据结构超高级。代码打包好重(chóng)用，Std库功能丰富。解释语言省时间，不懂编译、连接苦。解释器动态使用，不用书写test.py。程序代码短而精。C家函数拿来用。</p>
+<p>名称不源于大蛇，而是《蒙提·派森的飞行马戏团》，鼓励你ref其小品。</p>
+<p>本教程邀请您在阅读时使用Python解释器。</p>
+<p>本教程将介绍Python语言的各种特性。</p>
+<h1 id="2-Using-the-Python-Interpreter-使用Python解释器"><a href="#2-Using-the-Python-Interpreter-使用Python解释器" class="headerlink" title="2. Using the Python Interpreter 使用Python解释器"></a>2. Using the Python Interpreter 使用Python解释器</h1><h2 id="2-1-Invoking-the-Interpreter"><a href="#2-1-Invoking-the-Interpreter" class="headerlink" title="2.1. Invoking the Interpreter"></a>2.1. Invoking the Interpreter</h2><p>Linux解释器一般在 <code>/usr/local/bin/python3.7</code> 或 <code>/usr/local/python</code> 要不然找一下。</p>
+<p>Windows别忘了在命令行设置环境变量，分号后路径为解释器所在路径 <code>set path=%path%;C:\python37</code>  <a href="ttps://docs.python.org/3/faq/windows.html#faq-run-program-under-windows" target="_blank" rel="noopener">Windows打开Python解释器方法</a></p>
+<p>（^D = Ctrl+D = c-d）</p>
+<p>退出解释器方法：在有<code>&gt;&gt;&gt;</code>或<code>...</code>时按<code>c-d</code> <code>c-z + Enter</code> <code>quit()</code></p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
 
       
     </div>
@@ -86,7 +99,7 @@ File signature123off  00 01 02 03 04 05">
         
   
   <div class="tags">
-    <a href="/tags/File-structure/">File_structure</a>
+    <a href="/tags/Python/">Python</a>
   </div>
 
         
@@ -113,7 +126,7 @@ File signature123off  00 01 02 03 04 05">
   <h3 class="title">分类</h3>
   <ul class="entry">
   
-    <li><a href="/categories/Programming/">Programming</a><small>3</small></li>
+    <li><a href="/categories/Programming/">Programming</a><small>4</small></li>
   
     <li><a href="/categories/This/">This</a><small>1</small></li>
   
@@ -133,6 +146,8 @@ File signature123off  00 01 02 03 04 05">
     <li><a href="/tags/C/">C++</a><small>0</small></li>
   
     <li><a href="/tags/File-structure/">File_structure</a><small>1</small></li>
+  
+    <li><a href="/tags/Python/">Python</a><small>1</small></li>
   
     <li><a href="/tags/algorithm/">algorithm</a><small>0</small></li>
   

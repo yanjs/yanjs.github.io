@@ -439,7 +439,10 @@ article .entry .pullquote {
   width: 45%;
   font-size: 1.5em;
 }
-article footer {
+dd {
+  margin-inline-start: 40px;
+}
+footer {
   margin-top: 15px;
   padding-top: 10px;
   border-top: 1px solid #ddd;
@@ -449,49 +452,49 @@ article footer {
   position: relative;
   min-height: 16px;
 }
-article footer a {
+footer a {
   color: #999;
 }
-article footer a:hover {
+footer a:hover {
   color: #258fb8;
   text-decoration: none;
 }
-article footer a:before {
+footer a:before {
   font: 1.1em FontAwesome;
   padding-right: 10px;
   vertical-align: middle;
 }
-article footer a.more-link:before {
+footer a.more-link:before {
   content: '\f054';
 }
-article footer a.comment-link:before {
+footer a.comment-link:before {
   content: '\f075';
 }
-article footer .categories,
-article footer .tags {
+footer .categories,
+footer .tags {
   position: relative;
   padding-left: 25px;
   margin: 5px 0;
 }
-article footer .categories:before,
-article footer .tags:before {
+footer .categories:before,
+footer .tags:before {
   position: absolute;
   font: 1.1em FontAwesome;
 }
-article footer .categories:before {
+footer .categories:before {
   content: '\f07b';
   top: 2px;
   left: 1px;
 }
-article footer .tags:before {
+footer .tags:before {
   content: '\f02b';
   top: 3px;
   left: 2px;
 }
-article footer .addthis {
+footer .addthis {
   margin-top: 15px;
 }
-article footer .addthis iframe {
+footer .addthis iframe {
   margin-top: 0;
 }
 #comment {

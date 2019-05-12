@@ -47,17 +47,37 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-02-23T16:12:12.000Z"><a href="/2019/02/CRC-32.html">Sun Feb 24 2019 00:12:12 GMT+0800</a></time>
+        <time datetime="2019-05-12T14:39:37.000Z"><a href="/2019/05/Python-restart.html">Sun May 12 2019 22:39:37 GMT+0800</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/02/CRC-32.html">CRC-32</a></h1>
+    <h1 class="title"><a href="/2019/05/Python-restart.html">Python.restart()</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Table of CRCs of all 8-bit messages. */</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> crc_table[<span class="number">256</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Flag: has the table been computed? Initially false. */</span></span><br><span class="line"><span class="keyword">int</span> crc_table_computed = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Make the table for a fast CRC. */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">make_crc_table</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> c;</span><br><span class="line">  <span class="keyword">int</span> n, k;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (n = <span class="number">0</span>; n &lt; <span class="number">256</span>; n++) &#123;</span><br><span class="line">    c = (<span class="keyword">unsigned</span> <span class="keyword">long</span>) n;</span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; <span class="number">8</span>; k++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (c &amp; <span class="number">1</span>)</span><br><span class="line">        c = <span class="number">0xedb88320</span>L ^ (c &gt;&gt; <span class="number">1</span>);</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        c = c &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    crc_table[n] = c;</span><br><span class="line">  &#125;</span><br><span class="line">  crc_table_computed = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Update a running CRC with the bytes buf[0..len-1]--the CRC</span></span><br><span class="line"><span class="comment">   should be initialized to all 1's, and the transmitted value</span></span><br><span class="line"><span class="comment">   is the 1's complement of the final running CRC (see the</span></span><br><span class="line"><span class="comment">   crc() routine below)). */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">update_crc</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> crc, <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf,</span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> c = crc;</span><br><span class="line">  <span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!crc_table_computed)</span><br><span class="line">    make_crc_table();</span><br><span class="line">  <span class="keyword">for</span> (n = <span class="number">0</span>; n &lt; len; n++) &#123;</span><br><span class="line">    c = crc_table[(c ^ buf[n]) &amp; <span class="number">0xff</span>] ^ (c &gt;&gt; <span class="number">8</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Return the CRC of the bytes buf[0..len-1]. */</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">crc</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *buf, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> update_crc(<span class="number">0xffffffff</span>L, buf, len) ^ <span class="number">0xffffffff</span>L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>今天开始重新从头开始学习Python3。<br>链接：<a href="https://docs.python.org/3/tutorial/index.html" target="_blank" rel="noopener">Python官方教程(En)</a></p>
+<p>此处为阅读笔记。</p>
+<h1 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h1><p>Python是解释型语言，扩展性强，很🐮🍺。</p>
+<h1 id="1-Whetting-Your-Appetite-激发你的学习欲望"><a href="#1-Whetting-Your-Appetite-激发你的学习欲望" class="headerlink" title="1. Whetting Your Appetite 激发你的学习欲望"></a>1. Whetting Your Appetite 激发你的学习欲望</h1><p>大意：</p>
+<p>(C家=C/C++)</p>
+<p>若你想要自动化，Python很合适。</p>
+<p>C家/Java易脱发。测试数据难生成。我的程序需拓展语言。Shell/Bat做GUI难。C家/Java草稿烦。</p>
+<p>Python易用多平台，是真正的编程语言。比Shell/Bat强大。错误处理完爆C。数据结构超高级。代码打包好重(chóng)用，Std库功能丰富。解释语言省时间，不懂编译、连接苦。解释器动态使用，不用书写test.py。程序代码短而精。C家函数拿来用。</p>
+<p>名称不源于大蛇，而是《蒙提·派森的飞行马戏团》，鼓励你ref其小品。</p>
+<p>本教程邀请您在阅读时使用Python解释器。</p>
+<p>本教程将介绍Python语言的各种特性。</p>
+<h1 id="2-Using-the-Python-Interpreter-使用Python解释器"><a href="#2-Using-the-Python-Interpreter-使用Python解释器" class="headerlink" title="2. Using the Python Interpreter 使用Python解释器"></a>2. Using the Python Interpreter 使用Python解释器</h1><h2 id="2-1-Invoking-the-Interpreter"><a href="#2-1-Invoking-the-Interpreter" class="headerlink" title="2.1. Invoking the Interpreter"></a>2.1. Invoking the Interpreter</h2><p>Linux解释器一般在 <code>/usr/local/bin/python3.7</code> 或 <code>/usr/local/python</code> 要不然找一下。</p>
+<p>Windows别忘了在命令行设置环境变量，分号后路径为解释器所在路径 <code>set path=%path%;C:\python37</code>  <a href="ttps://docs.python.org/3/faq/windows.html#faq-run-program-under-windows" target="_blank" rel="noopener">Windows打开Python解释器方法</a></p>
+<p>（^D = Ctrl+D = c-d）</p>
+<p>退出解释器方法：在有<code>&gt;&gt;&gt;</code>或<code>...</code>时按<code>c-d</code> <code>c-z + Enter</code> <code>quit()</code></p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
 
       
     </div>
@@ -77,28 +97,247 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-02-23T15:04:44.000Z"><a href="/2019/02/png.html">Sat Feb 23 2019 23:04:44 GMT+0800</a></time>
+        <time datetime="2019-02-23T16:12:12.000Z"><a href="/2019/02/CRC-32.html">Sun Feb 24 2019 00:12:12 GMT+0800</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/02/png.html">png</a></h1>
+    <h1 class="title"><a href="/2019/02/CRC-32.html">CRC-32</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h1 id="png-Portable-Network-Graphics-�l��u"><a href="#png-Portable-Network-Graphics-�l��u" class="headerlink" title="png (Portable Network Graphics) �ļ��ṹ"></a>png (Portable Network Graphics) �ļ��ṹ</h1><p>Source: <a href="https://www.w3.org/TR/PNG-Structure.html" target="_blank" rel="noopener">https://www.w3.org/TR/PNG-Structure.html</a></p>
-<h2 id="Sample-PNG"><a href="#Sample-PNG" class="headerlink" title="Sample PNG"></a>Sample PNG</h2><p>![png][sample]</p>
-<h2 id="File-signature"><a href="#File-signature" class="headerlink" title="File signature"></a>File signature</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">off  00 01 02 03 04 05 06 07</span><br><span class="line">hex  89 50 4E 47 0D 0A 1A 0A</span><br><span class="line">asc      P  N  G \r \n    \n</span><br></pre></td></tr></table></figure>
-<h2 id="Chunk"><a href="#Chunk" class="headerlink" title="Chunk"></a>Chunk</h2><h3 id="Parts"><a href="#Parts" class="headerlink" title="Parts:"></a>Parts:</h3><p><strong>Length</strong></p>
-<p>&emsp; A 4-byte unsigned integer giving the number of bytes in the chunk’s <strong>Data</strong> field</p>
-<p><strong>Chunk Type</strong></p>
-<p>A 4-byte chunk type code.</p>
-<p><strong>Chunk Data</strong></p>
-<p>The data bytes appropriate to the chunk type, if any. This field can be of zero length.</p>
-<p><strong>CRC</strong></p>
-<p>A 4-byte CRC (Cyclic Redundancy Check) calculated on the preceding bytes in the chunk, including the <strong>Chunk Type</strong> code and <strong>Chunk Data</strong> fields, but NOT including the <strong>Length</strong> field. The CRC is always present, even for chunks containing no data.  </p>
-<p>-[sample]:  <a href="https://upload.wikimedia.org/wikipedia/commons/6/6b/Trimethylsilanol_%28structure%29.png" target="_blank" rel="noopener">https://upload.wikimedia.org/wikipedia/commons/6/6b/Trimethylsilanol_%28structure%29.png</a></p>
+        <p>source: <a href="https://www.w3.org/TR/PNG-CRCAppendix.html" target="_blank" rel="noopener">https://www.w3.org/TR/PNG-CRCAppendix.html</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Table of CRCs of all 8-bit messages. */</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> crc_table[<span class="number">256</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Flag: has the table been computed? Initially false. */</span></span><br><span class="line"><span class="keyword">int</span> crc_table_computed = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Make the table for a fast CRC. */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">make_crc_table</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> c;</span><br><span class="line">  <span class="keyword">int</span> n, k;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (n = <span class="number">0</span>; n &lt; <span class="number">256</span>; n++) &#123;</span><br><span class="line">    c = (<span class="keyword">unsigned</span> <span class="keyword">long</span>) n;</span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; <span class="number">8</span>; k++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (c &amp; <span class="number">1</span>)</span><br><span class="line">        c = <span class="number">0xedb88320</span>L ^ (c &gt;&gt; <span class="number">1</span>);</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        c = c &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    crc_table[n] = c;</span><br><span class="line">  &#125;</span><br><span class="line">  crc_table_computed = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Update a running CRC with the bytes buf[0..len-1]--the CRC</span></span><br><span class="line"><span class="comment">   should be initialized to all 1's, and the transmitted value</span></span><br><span class="line"><span class="comment">   is the 1's complement of the final running CRC (see the</span></span><br><span class="line"><span class="comment">   crc() routine below)). */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">update_crc</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> crc, <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf,</span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> c = crc;</span><br><span class="line">  <span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!crc_table_computed)</span><br><span class="line">    make_crc_table();</span><br><span class="line">  <span class="keyword">for</span> (n = <span class="number">0</span>; n &lt; len; n++) &#123;</span><br><span class="line">    c = crc_table[(c ^ buf[n]) &amp; <span class="number">0xff</span>] ^ (c &gt;&gt; <span class="number">8</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Return the CRC of the bytes buf[0..len-1]. */</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">crc</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *buf, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> update_crc(<span class="number">0xffffffff</span>L, buf, len) ^ <span class="number">0xffffffff</span>L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-02-23T15:04:44.000Z"><a href="/2019/02/PNG-Structure.html">Sat Feb 23 2019 23:04:44 GMT+0800</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/02/PNG-Structure.html">PNG Structure</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="PNG-Portable-Network-Graphics-Structure"><a href="#PNG-Portable-Network-Graphics-Structure" class="headerlink" title="PNG (Portable Network Graphics) Structure"></a>PNG (Portable Network Graphics) Structure</h1><p>Source: <a href="https://www.w3.org/TR/PNG-Structure.html" target="_blank" rel="noopener">https://www.w3.org/TR/PNG-Structure.html</a></p>
+<h2 id="File-signature"><a href="#File-signature" class="headerlink" title="File signature"></a>File signature</h2><p>8 bytes:</p>
+<pre>
+HEX:  89 50 4E 47 0D 0A 1A 0A 
+ASC:  NA  P  N  G \r \n NA \n 
+</pre>
+
+<h2 id="Parts"><a href="#Parts" class="headerlink" title="Parts"></a>Parts</h2><p>Each chunk consists of three or four fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Length</strong></td>
+<td>A 4-byte unsigned integer <tt>∈[0,2^31-1]</tt> giving the number of bytes in the <strong>Chunk Data</strong> field. Although encoders and decoders should treat the length as unsigned, its value shall not exceed <tt>(2^31-1)</tt> bytes.</td>
+</tr>
+<tr>
+<td><strong>Chunk Type</strong></td>
+<td>A 4-byte chunk type code. Each byte <tt>∈[‘A’,’Z’]∪[‘a’,’z’]</tt>.</td>
+</tr>
+<tr>
+<td><strong>Chunk Data</strong></td>
+<td>The data bytes appropriate to the <strong>Chunk Type</strong>, if any. This field can be of zero length.</td>
+</tr>
+<tr>
+<td><strong>CRC</strong></td>
+<td>A 4-byte CRC (Cyclic Redundancy Check) calculated on the preceding bytes in the chunk, including the <strong>Chunk Type</strong> code and <strong>Chunk Data</strong> fields, but NOT including the <strong>Length</strong> field. The CRC is always present, even for chunks containing no data. See <a href="https://www.w3.org/TR/PNG/#5CRC-algorithm" target="_blank" rel="noopener">CRC algorithm</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>The chunk data length can be any number of bytes up to the maximum; therefore, implementors cannot assume that chunks are aligned on any boundaries larger than bytes.</p>
+<p>See Rationale: <a href="https://www.w3.org/TR/PNG-Rationale.html#R.Chunk-layout" target="_blank" rel="noopener">Chunk layout</a></p>
+<h2 id="Chunk-Naming-Conventions"><a href="#Chunk-Naming-Conventions" class="headerlink" title="Chunk Naming Conventions"></a>Chunk Naming Conventions</h2><p>Chunk types are chosen to be meaningful names when the bytes of the chunk type are interpreted as ISO 646 letters. Chunk types are assigned so that a decoder can determine some properties of a chunk even when the type is not recognized.</p>
+<p>Four bits of the chunk type, the property bits, namely bit 5 (value 32) of each byte, are used to convey chunk properties. This choice means that a human can read off the assigned properties according to whether the letter corresponding to each byte of the chunk type is uppercase (bit 5 is 0) or lowercase (bit 5 is 1).</p>
+<p>The property bits are an inherent part of the chunk type, and hence are fixed for any chunk type. Thus, CHNK and cHNk would be unrelated chunk types, not the same chunk with different properties.</p>
+<table>
+<thead>
+<tr>
+<th>Byte</th>
+<th>Bit</th>
+<th>Name</th>
+<th>Value</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>5</td>
+<td>Ancillary bit</td>
+<td>0 (UPPERCASE) = CRITICAL, 1 (lowercase) = ancillary.</td>
+<td>Critical chunks are necessary for successful display of the contents of the datastream. A decoder trying to extract the image, upon encountering an unknown chunk type in which the ancillary bit is 0, shall indicate to the user that the image contains information it cannot safely interpret. Ancillary chunks are not strictly necessary in order to meaningfully display the contents of the datastream. A decoder encountering an unknown chunk type in which the ancillary bit is 1 can safely ignore the chunk and proceed to display the image.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>Private bit</td>
+<td>0 = PUBLIC, 1 = private.</td>
+<td>A public chunk is one that is defined in this International Standard or is registered in the list of PNG special-purpose public chunk types maintained by the Registration Authority. Applications can also define private (unregistered) chunk types for their own purposes. Decoders do not need to test the private-chunk property bit, since it has no functional significance; it is simply an administrative convenience to ensure that public and private chunk names will not conflict.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>Reserved bit</td>
+<td>0 = IN THIS VERSION OF PNG, 1 = ??.</td>
+<td>The case of the third letter of the chunk name is reserved for possible future extension. In this International Standard, all chunk names shall have uppercase third letters.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+<td>Save-to-copy bit</td>
+<td>0 = UNSAFE, 1 = safe.</td>
+<td>This property bit is not of interest to pure decoders, but it is needed by PNG editors. This bit defines the proper handling of unrecognized chunks in a datastream that is being modified.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre>
+cHNk  //32 bit chunk type represented in text form
+||||
+|||^- Safe-to-copy bit is 1 (lowercase; bit 5 is 1)
+||^-- Reserved bit is 0     (uppercase; bit 5 is 0)
+|^--- Private bit is 0      (uppercase; bit 5 is 0)
+^---- Ancillary bit is 1    (lowercase; bit 5 is 1)
+</pre>
+
+<h2 id="Trunk-Order"><a href="#Trunk-Order" class="headerlink" title="Trunk Order"></a>Trunk Order</h2><table>
+<thead>
+<tr>
+<th>Chunk name</th>
+<th>Multiple allowed</th>
+<th>Ordering constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IHDR</td>
+<td>No</td>
+<td>Shall be first</td>
+</tr>
+<tr>
+<td>PLTE</td>
+<td>No</td>
+<td>Before first IDAT</td>
+</tr>
+<tr>
+<td>IDAT</td>
+<td>Yes</td>
+<td>Multiple IDAT chunks shall be consecutive</td>
+</tr>
+<tr>
+<td>IEND</td>
+<td>No</td>
+<td>Shall be last</td>
+</tr>
+<tr>
+<td>cHRM</td>
+<td>No</td>
+<td>Before PLTE and IDAT</td>
+</tr>
+<tr>
+<td>gAMA</td>
+<td>No</td>
+<td>Before PLTE and IDAT</td>
+</tr>
+<tr>
+<td>iCCP</td>
+<td>No</td>
+<td>Before PLTE and IDAT. If the iCCP chunk is present, the sRGB chunk should not be present.</td>
+</tr>
+<tr>
+<td>sBIT</td>
+<td>No</td>
+<td>Before PLTE and IDAT</td>
+</tr>
+<tr>
+<td>sRGB</td>
+<td>No</td>
+<td>Before PLTE and IDAT. If the sRGB chunk is present, the iCCP chunk should not be present.</td>
+</tr>
+<tr>
+<td>bKGD</td>
+<td>No</td>
+<td>After PLTE; before IDAT</td>
+</tr>
+<tr>
+<td>hIST</td>
+<td>No</td>
+<td>After PLTE; before IDAT</td>
+</tr>
+<tr>
+<td>tRNS</td>
+<td>No</td>
+<td>After PLTE; before IDAT</td>
+</tr>
+<tr>
+<td>pHYs</td>
+<td>No</td>
+<td>Before IDAT</td>
+</tr>
+<tr>
+<td>sPLT</td>
+<td>Yes</td>
+<td>Before IDAT</td>
+</tr>
+<tr>
+<td>tIME</td>
+<td>No</td>
+<td>None</td>
+</tr>
+<tr>
+<td>iTXt</td>
+<td>Yes</td>
+<td>None</td>
+</tr>
+<tr>
+<td>tEXt</td>
+<td>Yes</td>
+<td>None</td>
+</tr>
+<tr>
+<td>zTXt</td>
+<td>Yes</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>PNG images with PLTE in datastream:</p>
+<iframe src="/img/png1.svg" height="540" width="800"><br></iframe>
+
+<p>PNG images without PLTE in datastream:</p>
+<iframe src="/img/png2.svg" height="540" width="900"><br></iframe>
+
+<h2 id="Chunks"><a href="#Chunks" class="headerlink" title="Chunks"></a>Chunks</h2><p>See <a href="https://www.w3.org/TR/PNG/#table53" target="_blank" rel="noopener">Portable Network Graphics (PNG) Specification (Second Edition)</a></p>
+<p>…</p>
+<h2 id="Sample-PNG"><a href="#Sample-PNG" class="headerlink" title="Sample PNG"></a>Sample PNG</h2><p><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Trimethylsilanol_%28structure%29.png" alt="png"></p>
 
       
     </div>
@@ -196,7 +435,7 @@
   <h3 class="title">分类</h3>
   <ul class="entry">
   
-    <li><a href="/categories/Programming/">Programming</a><small>3</small></li>
+    <li><a href="/categories/Programming/">Programming</a><small>4</small></li>
   
     <li><a href="/categories/This/">This</a><small>1</small></li>
   
@@ -216,6 +455,8 @@
     <li><a href="/tags/C/">C++</a><small>0</small></li>
   
     <li><a href="/tags/File-structure/">File_structure</a><small>1</small></li>
+  
+    <li><a href="/tags/Python/">Python</a><small>1</small></li>
   
     <li><a href="/tags/algorithm/">algorithm</a><small>0</small></li>
   
