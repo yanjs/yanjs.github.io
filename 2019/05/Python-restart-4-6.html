@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Python.restart()[4:6] | Yanjs</title>
+  <meta name="author" content="Stibium">
+  
+  <meta name="description" content="4. More Control Flow Tools 更多控制流工具4.1. if Statements if语句12345678910111213&amp;gt;&amp;gt;&amp;gt; x = int(input(&#34;Please enter an integer: &#34;))Please enter an inte">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Python.restart()[4:6]">
+  <meta property="og:site_name" content="Yanjs">
+
+  
+    <meta property="og:image" content="">
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Yanjs" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Yanjs</a></h1>
+  <h2><a href="/">test page</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-05-13T04:48:11.000Z"><a href="/2019/05/Python-restart-4-6.html">Mon May 13 2019 12:48:11 GMT+0800</a></time>
+      
+      
+  
+    <h1 class="title">Python.restart()[4:6]</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="4-More-Control-Flow-Tools-更多控制流工具"><a href="#4-More-Control-Flow-Tools-更多控制流工具" class="headerlink" title="4. More Control Flow Tools 更多控制流工具"></a>4. More Control Flow Tools 更多控制流工具</h1><h2 id="4-1-if-Statements-if语句"><a href="#4-1-if-Statements-if语句" class="headerlink" title="4.1. if Statements if语句"></a>4.1. if Statements if语句</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = int(input(<span class="string">"Please enter an integer: "</span>))</span><br><span class="line">Please enter an integer: <span class="number">42</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">if</span> x &lt; <span class="number">0</span>:</span><br><span class="line"><span class="meta">... </span>    x = <span class="number">0</span></span><br><span class="line"><span class="meta">... </span>    print(<span class="string">'Negative changed to zero'</span>)</span><br><span class="line"><span class="meta">... </span><span class="keyword">elif</span> x == <span class="number">0</span>:</span><br><span class="line"><span class="meta">... </span>    print(<span class="string">'Zero'</span>)</span><br><span class="line"><span class="meta">... </span><span class="keyword">elif</span> x == <span class="number">1</span>:</span><br><span class="line"><span class="meta">... </span>    print(<span class="string">'Single'</span>)</span><br><span class="line"><span class="meta">... </span><span class="keyword">else</span>:</span><br><span class="line"><span class="meta">... </span>    print(<span class="string">'More'</span>)</span><br><span class="line">...</span><br><span class="line">More</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-for-Statements-for语句"><a href="#4-2-for-Statements-for语句" class="headerlink" title="4.2. for Statements for语句"></a>4.2. for Statements for语句</h2><p>与C家有很大不同哦</p>
+<p>下方代码不加 <code>[:]</code> 会无限地在words前面插入’defenestrate’。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> w <span class="keyword">in</span> words[:]:  <span class="comment"># Loop over a slice copy of the entire list.</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">if</span> len(w) &gt; <span class="number">6</span>:</span><br><span class="line"><span class="meta">... </span>        words.insert(<span class="number">0</span>, w)</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>words</span><br><span class="line">[<span class="string">'defenestrate'</span>, <span class="string">'cat'</span>, <span class="string">'window'</span>, <span class="string">'defenestrate'</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="4-3-The-range-Function-range-函数"><a href="#4-3-The-range-Function-range-函数" class="headerlink" title="4.3. The range() Function range()函数"></a>4.3. The range() Function range()函数</h2><pre>range(5, 10) 相当于 5, 6, 7, 8, 9
+range(0, 10, 3) 相当于 0, 3, 6, 9
+range(-10, -100, -30) 相当于 -10, -40, -70
+</pre>
+
+<p>range()返回一个可迭代对象，比List列表节约空间</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = [<span class="string">'Mary'</span>, <span class="string">'had'</span>, <span class="string">'a'</span>, <span class="string">'little'</span>, <span class="string">'lamb'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> range(len(a)):</span><br><span class="line"><span class="meta">... </span>    print(i, a[i])</span><br><span class="line">...</span><br><span class="line"><span class="number">0</span> Mary</span><br><span class="line"><span class="number">1</span> had</span><br><span class="line"><span class="number">2</span> a</span><br><span class="line"><span class="number">3</span> little</span><br><span class="line"><span class="number">4</span> lamb</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(range(<span class="number">10</span>))</span><br><span class="line">range(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">5</span>))</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="4-4-break-and-continue-Statements-and-else-Clauses-on-Loops-break和continue语句，以及循环上的else子句"><a href="#4-4-break-and-continue-Statements-and-else-Clauses-on-Loops-break和continue语句，以及循环上的else子句" class="headerlink" title="4.4. break and continue Statements, and else Clauses on Loops break和continue语句，以及循环上的else子句"></a>4.4. break and continue Statements, and else Clauses on Loops break和continue语句，以及循环上的else子句</h2><p>else相比if的else，更像try的else。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">2</span>, <span class="number">10</span>):</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>, n):</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">if</span> n % x == <span class="number">0</span>:</span><br><span class="line"><span class="meta">... </span>            print(n, <span class="string">'equals'</span>, x, <span class="string">'*'</span>, n//x)</span><br><span class="line"><span class="meta">... </span>            <span class="keyword">break</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">else</span>:</span><br><span class="line"><span class="meta">... </span>        <span class="comment"># loop fell through without finding a factor</span></span><br><span class="line"><span class="meta">... </span>        print(n, <span class="string">'is a prime number'</span>)</span><br><span class="line">...</span><br><span class="line"><span class="number">2</span> <span class="keyword">is</span> a prime number</span><br><span class="line"><span class="number">3</span> <span class="keyword">is</span> a prime number</span><br><span class="line"><span class="number">4</span> equals <span class="number">2</span> * <span class="number">2</span></span><br><span class="line"><span class="number">5</span> <span class="keyword">is</span> a prime number</span><br><span class="line"><span class="number">6</span> equals <span class="number">2</span> * <span class="number">3</span></span><br><span class="line"><span class="number">7</span> <span class="keyword">is</span> a prime number</span><br><span class="line"><span class="number">8</span> equals <span class="number">2</span> * <span class="number">4</span></span><br><span class="line"><span class="number">9</span> equals <span class="number">3</span> * <span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">2</span>, <span class="number">10</span>):</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">if</span> num % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line"><span class="meta">... </span>        print(<span class="string">"Found an even number"</span>, num)</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">continue</span></span><br><span class="line"><span class="meta">... </span>    print(<span class="string">"Found a number"</span>, num)</span><br><span class="line">Found an even number <span class="number">2</span></span><br><span class="line">Found a number <span class="number">3</span></span><br><span class="line">Found an even number <span class="number">4</span></span><br><span class="line">Found a number <span class="number">5</span></span><br><span class="line">Found an even number <span class="number">6</span></span><br><span class="line">Found a number <span class="number">7</span></span><br><span class="line">Found an even number <span class="number">8</span></span><br><span class="line">Found a number <span class="number">9</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-5-pass-Statements-pass语句"><a href="#4-5-pass-Statements-pass语句" class="headerlink" title="4.5. pass Statements pass语句"></a>4.5. pass Statements pass语句</h2><p>用于必须要语句但是又不需要做事的时候</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">pass</span>  <span class="comment"># Busy-wait for keyboard interrupt (Ctrl+C)</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">MyEmptyClass</span>:</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">pass</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">initlog</span><span class="params">(*args)</span>:</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">pass</span>   <span class="comment"># Remember to implement this!</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>。。。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Programming/">Programming</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Python/">Python</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" autocomplete="off" results="0" placeholder="Google站内搜索">
+    <input type="hidden" name="q" value="site:yanjs.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Programming/">Programming</a><small>5</small></li>
+  
+    <li><a href="/categories/This/">This</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Algorithm/">Algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/Book/">Book</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C++</a><small>0</small></li>
+  
+    <li><a href="/tags/File-structure/">File_structure</a><small>1</small></li>
+  
+    <li><a href="/tags/Python/">Python</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>0</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">&copy; 2019 Stibium <a href="&#x6D;&#x61;&#x69;l&#x74;&#x6F;:&#x66;e&#x6C;&#x69;&#x78;&#x79;&#x6A;s&#x40;&#x67;&#x6D;&#x61;&#x69;&#x6C;.&#x63;&#x6F;&#x6D;">Con&#x74;ac&#x74; &#x6D;e &#x76;ia &#x65;&#x6D;ai&#x6C;</a>
+</div>
+<div class="alignleft">
+  / Powered by <a href="//hexo.io">Hexo</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
